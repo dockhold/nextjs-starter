@@ -34,10 +34,12 @@ want a static-only build — it disables API routes and server rendering.
 
 ## Environment variables
 
-Server code reads any variable set in the dashboard. Variables that reach the
-browser need the `NEXT_PUBLIC_` prefix and are inlined **at build time** — set
-them before deploying. Keep secrets in the Vault and read them only in server
-code (route handlers, server components). See [`.env.example`](.env.example).
+Set variables in the dashboard, not a committed `.env` — Dockhold doesn't read
+one. Server code reads them from `process.env` at runtime (route handlers,
+server components); keep secrets in the Vault. Variables that reach the browser
+need the `NEXT_PUBLIC_` prefix and are baked in **at build time** — the build
+doesn't see dashboard variables, so set those in code (e.g. `next.config.js`),
+and only ever for public values, never a secret. See [`.env.example`](.env.example).
 
 ## Add a database
 
