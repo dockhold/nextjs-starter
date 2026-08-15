@@ -1,0 +1,13 @@
+# Keep the image small, and never bake local files into it.
+node_modules
+.next
+out
+npm-debug.log*
+.git
+.gitignore
+.env
+.env.*
+*.log
+.DS_Store
+Dockerfile
+.dockerignore

@@ -12,25 +12,33 @@ Node server, so you don't have to flatten it to a static export.
 2. Click the **Deploy to Dockhold** button above, or open
    [app.dockhold.eu/new](https://app.dockhold.eu/new), connect GitHub, and pick
    your repo.
-3. Dockhold installs dependencies, runs `npm run build`, and starts the app. It
-   goes live at `https://<your-app>.dockhold.app` with HTTPS handled.
+3. Dockhold builds the included [`Dockerfile`](Dockerfile), which runs
+   `npm run build`, and starts the app. It goes live at
+   `https://<your-app>.dockhold.app` with HTTPS handled.
 
 Every later push to your main branch redeploys automatically.
 
 ## How it serves
 
-The `start` script in [`package.json`](package.json) binds `next start` to the
-assigned port, on all interfaces:
+[`next.config.js`](next.config.js) sets `output: 'standalone'`, so the build
+produces a self-contained server carrying only the modules it needs instead of
+all of `node_modules`. The [`Dockerfile`](Dockerfile) ships that server and runs
+it. The result is a small image that deploys on any plan.
 
-```json
-"build": "next build",
-"start": "next start -H 0.0.0.0 -p $PORT"
+Two settings do the work, both in the Dockerfile:
+
+```dockerfile
+ENV HOSTNAME=0.0.0.0
+CMD ["node", "server.js"]
 ```
 
-`-H 0.0.0.0 -p $PORT` is the one rule that matters — a default `next start` may
-bind the wrong host or port and no traffic reaches you. Don't set
-`output: 'export'` in [`next.config.js`](next.config.js) unless you specifically
-want a static-only build — it disables API routes and server rendering.
+The server reads `$PORT` on its own, and `HOSTNAME=0.0.0.0` binds every
+interface. That pair is the one rule that matters. Bind localhost or a fixed
+port and no traffic reaches you.
+
+Anything you put in `public/` is served as-is. Don't set `output: 'export'`
+unless you specifically want a static-only build, because it disables API routes
+and server rendering.
 
 ## Environment variables
 
