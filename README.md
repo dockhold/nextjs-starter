@@ -9,7 +9,7 @@ Node server, so you don't have to flatten it to a static export.
 ## Deploy it
 
 1. Click **Use this template** (or fork this repo) to get your own copy.
-2. Click the **Deploy to Dockhold** button above, or open
+2. Click the **Deploy on Dockhold** button above, or open
    [app.dockhold.eu/new](https://app.dockhold.eu/new), connect GitHub, and pick
    your repo.
 3. Dockhold builds the included [`Dockerfile`](Dockerfile), which runs
