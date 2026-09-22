@@ -8,7 +8,7 @@ A full-stack Next.js app (pages, API routes, server rendering) that runs as a No
 2. `npx dockhold deploy --name nextjs-starter` from this folder.
 3. Report the URL the command prints. Never claim a URL is live before the command prints it. Run the same command again to ship a new version; it updates the same app because the CLI recorded the app id in `.dockhold/app.json` (no secret in it, and the CLI adds it to `.gitignore`).
 
-This template has no Dockerfile. Dockhold detects the stack and builds it; that is included from the first compute unit. On a free account the deploy stops and asks for a Dockerfile: add one at the root (examples: https://dockhold.eu/docs/concepts/dockerfiles) and deploy again.
+The build uses the Dockerfile at the root on every account. Without it, Dockhold recognises a Next.js app with standalone output (this template sets it in `next.config.js`) and builds it on every account.
 
 ## Push-to-deploy (from a GitHub repo)
 
